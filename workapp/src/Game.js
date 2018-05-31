@@ -1,13 +1,20 @@
+import React from 'react';
 import Board from './Board';
-import App from './App'
-import React, { Component } from 'react';
-import './App.css';
 
 class Game extends React.Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            history: [{
+                squares: Array(9).fill(null)
+            }],
+            xIsNext: true
+        }
+    }
     render() {
         return (
             <div className="container">
-                <App/>
                 <div className="game">
                     <div className="game-board">
                         <Board />
