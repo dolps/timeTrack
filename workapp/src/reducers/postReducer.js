@@ -1,4 +1,4 @@
-import {FETCH_POSTS, ADD_POSTS} from "../actions/types";
+import {FETCH_POSTS, ADD_POST} from "../actions/types";
 
 const initialState = {
     items: [],
@@ -8,8 +8,9 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
         case FETCH_POSTS:
-            console.log('in reducer');
             return {...state, items: action.payload};
+        case ADD_POST:
+            return {...state, item: action.payload};
         default:
             return state;
     }
