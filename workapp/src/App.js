@@ -4,6 +4,7 @@ import './App.css';
 import {Navbar, Jumbotron, Grid} from 'react-bootstrap';
 import Game from "./Game";
 import Posts from "./components/Posts"
+import Todos from "./components/Todos"
 import Postform from "./components/Postform"
 import {Provider} from 'react-redux'
 import store from './store'
@@ -32,12 +33,15 @@ class App extends Component {
                         </p>
                     </Jumbotron>
                     <Grid>
+                        <Game/>
+                    </Grid>
+                    <Grid>
+                        <Todos/>
+                    </Grid>
+                    <Grid>
                         <Postform/>
                         <hr/>
                         <Posts/>
-                    </Grid>
-                    <Grid>
-                        <Game/>
                     </Grid>
                 </div>
             </Provider>
