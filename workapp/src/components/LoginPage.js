@@ -5,11 +5,12 @@ import {connect} from 'react-redux'
 import {firebaseConnect, isLoaded, isEmpty} from 'react-redux-firebase'
 // import GoogleButton from 'react-google-button' // optional
 
+// todo more auth stuff https://tylermcginnis.com/react-router-protected-routes-authentication/
+// todo check this for firebase https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/
 export const LoginPage = ({firebase, auth}) => (
     <div>
         <button // <GoogleButton/> button can be used instead
-            onClick={() => firebase.login({provider: 'google', type: 'popup'})}
-        >Login With Google
+            onClick={() => firebase.login({provider: 'google', type: 'popup'})}>Login With Google
         </button>
         <div>
             <h2>Auth</h2>
