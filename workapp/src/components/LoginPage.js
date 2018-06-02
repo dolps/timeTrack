@@ -9,7 +9,7 @@ import {firebaseConnect, isLoaded, isEmpty} from 'react-redux-firebase'
 // todo check this for firebase https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/
 export const LoginPage = ({firebase, auth}) => (
     <div>
-        <button // <GoogleButton/> button can be used instead
+        <button
             onClick={() => firebase.login({provider: 'google', type: 'popup'})}>Login With Google
         </button>
         <div>
