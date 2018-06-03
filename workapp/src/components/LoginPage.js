@@ -4,7 +4,7 @@ import {compose} from 'redux'
 import {connect} from 'react-redux'
 import {firebaseConnect, isLoaded, isEmpty} from 'react-redux-firebase'
 import {Navbar, Jumbotron, Grid, Nav, NavItem, MenuItem, NavDropdown} from 'react-bootstrap';
-import { withRouter } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import * as routes from '../constants/routes';
 import '.././App.css';
 // import GoogleButton from 'react-google-button' // optional
@@ -16,16 +16,22 @@ const INITIAL_STATE = {email: '', authenticated: false};
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            redirect: false
+        };
     }
 
     login() {
-
+        this.props.firebase.login({provider: 'google', type: 'popup'}).then(() => this.setState({redirect: true}));
     }
 
     render() {
         const {firebase, auth} = this.props;
-        const {history} = this.props;
-        //history.push(routes.DASHBOARD_ROUTE);
+        const {redirect} = this.state;
+
+        if (redirect) {
+            return <Redirect to='/'/>;
+        }
 
         return (
             <div>
@@ -36,7 +42,7 @@ class LoginPage extends React.Component {
                             !isLoaded(auth) ? <span>Loading...</span> : isEmpty(auth) ?
                                 <span>Not Authed</span> : <pre>{JSON.stringify(auth, null, 2)}</pre>
                         }
-                        <button onClick={() => firebase.login({provider: 'google', type: 'popup'})}>Login With Google
+                        <button onClick={() => this.login()}>Login With Google
                         </button>
                     </div>
                 </Grid>
