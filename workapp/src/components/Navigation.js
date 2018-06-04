@@ -10,7 +10,7 @@ import {connect} from 'react-redux'
 import {firebaseConnect, isLoaded, isEmpty} from 'react-redux-firebase'
 
 export const Navigation = ({firebase, auth}) => (
-    <Navbar inverse fixedTop>
+    <Navbar inverse>
         <Grid>
             <Navbar.Header>
                 <Navbar.Brand>

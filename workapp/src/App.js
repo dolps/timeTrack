@@ -10,6 +10,7 @@ import LoginPage from "./components/LoginPage";
 import Navigation from './components/Navigation';
 import HomePage from './components/HomePage';
 import {Navbar, Jumbotron, Grid, Nav, NavItem, MenuItem, NavDropdown} from 'react-bootstrap';
+import Dashboard from "./components/Dashboard";
 
 class App extends Component {
     render() {
@@ -21,9 +22,9 @@ class App extends Component {
                         <div className="App">
 
                             <Grid>
-                                <Route exact path="/" component={HomePage}></Route>
+                                <Route exact path="/" component={HomePage}/>
                                 <Route exact path="/login" component={LoginPage}/>
-                                <Route exact path="/dashboard" component={HomePage}/>
+                                <Route exact path="/dashboard" component={Dashboard}/>
                             </Grid>
 
 
