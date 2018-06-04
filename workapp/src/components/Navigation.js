@@ -18,7 +18,7 @@ export const Navigation = ({firebase, auth}) => (
                 </Navbar.Brand>
             </Navbar.Header>
             <Nav pullRight={true}>
-                <NavItem eventKey={1} href="#">
+                <NavItem eventKey={1} href="/dashboard">Dashboard
                 </NavItem>
                 <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
                     {

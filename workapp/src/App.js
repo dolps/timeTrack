@@ -25,7 +25,7 @@ class App extends Component {
                             <Grid>
                                 <Route exact path="/" component={HomePage}/>
                                 <Route exact path="/login" component={LoginPage}/>
-                                <Route exact path="/dashboard" component={UserIsAuthenticated(Dashboard)}/>
+                                <Route exact path="/dashboard" component={Dashboard}/>
                             </Grid>
 
 
