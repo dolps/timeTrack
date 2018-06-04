@@ -11,7 +11,7 @@ const Todos = ({todos, firebase}) => {
                 (key, id) => (
                     <div key={key} id={id}>{todos[key].text}</div>
                 )
-            )
+            );
 
     const sampleTodo = {text: 'Sample', done: false};
     const pushSample = () => firebase.push('todos', sampleTodo);
