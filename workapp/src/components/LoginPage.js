@@ -7,6 +7,7 @@ import {Navbar, Jumbotron, Grid, Nav, NavItem, MenuItem, NavDropdown} from 'reac
 import {Redirect} from 'react-router-dom';
 import * as routes from '../constants/routes';
 import '.././App.css';
+import {UserIsNotAuthenticated} from '../auth/authService';
 // import GoogleButton from 'react-google-button' // optional
 
 // todo more auth stuff https://tylermcginnis.com/react-router-protected-routes-authentication/
@@ -28,10 +29,6 @@ class LoginPage extends React.Component {
     render() {
         const {firebase, auth} = this.props;
         const {redirect} = this.state;
-
-        if (redirect) {
-            return <Redirect to='/'/>;
-        }
 
         return (
             <div>
@@ -58,6 +55,8 @@ LoginPage.propTypes = {
     auth: PropTypes.object
 };
 
-export default compose(firebaseConnect(), // withFirebase can also be used
+export default compose(
+    UserIsNotAuthenticated,
+    firebaseConnect(), // withFirebase can also be used
     connect(({firebase: {auth}}) => ({auth}))
 )(LoginPage)
