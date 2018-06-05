@@ -8,7 +8,9 @@ export class AddWork extends Component {
         this.handleChange = this.handleChange.bind(this);
 
         this.state = {
-            value: ''
+            dateWorked: '',
+            hoursWorked: 0,
+            typeOfWork: '',
         }
     }
 
@@ -22,11 +24,20 @@ export class AddWork extends Component {
         return null;
     }
 
-    handleChange(e) {
-        this.setState({value: e.target.value});
+    handleChange($event) {
+        this.setState({[$event.target.name]: $event.target.value})
 
-        console.log(this.state.value);
+        console.log(JSON.stringify(JSON.stringify(this.state)));
     }
+
+    createOptList = (n) => {
+        let optList = [];
+        for (let i = 0; i < n; i++) {
+            optList.push(<option value={i} key={i}>{i}</option>);
+        }
+
+        return optList;
+    };
 
     render() {
         return (
@@ -38,7 +49,7 @@ export class AddWork extends Component {
                         <ControlLabel>Date worked</ControlLabel>
                         <FormControl
                             type="date"
-                            value={this.state.value}
+                            name="dateWorked"
                             placeholder="Enter text"
                             onChange={this.handleChange}
                         />
@@ -47,11 +58,11 @@ export class AddWork extends Component {
 
                     <FormGroup controlId="formControlsSelect">
                         <ControlLabel>Number of hours worked</ControlLabel>
-                        <FormControl componentClass="select" placeholder="select">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
+                        <FormControl componentClass="select"
+                                     name="hoursWorked"
+                                     onChange={this.handleChange}
+                                     placeholder="select">
+                            {this.createOptList(12)}
                         </FormControl>
                     </FormGroup>
 
@@ -60,25 +71,12 @@ export class AddWork extends Component {
                         <ControlLabel>Type of work</ControlLabel>
                         <FormControl
                             type="text"
-                            value={this.state.value}
+                            name="typeOfWork"
                             placeholder="Enter text"
                             onChange={this.handleChange}
                         />
                         <FormControl.Feedback/>
                     </FormGroup>
-
-                    <FormGroup controlId="formBasicText"
-                               validationState={this.getValidationState()}>
-                        <ControlLabel>Example with validation</ControlLabel>
-                        <FormControl
-                            type="date"
-                            value={this.state.value}
-                            placeholder="Enter text"
-                            onChange={this.handleChange}
-                        />
-                        <FormControl.Feedback/>
-                    </FormGroup>
-
 
                     <Button type="submit">Submit</Button>
                 </form>
