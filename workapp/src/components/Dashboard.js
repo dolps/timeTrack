@@ -15,7 +15,7 @@ class Dashboard extends Component {
 
     onCreateTodo(aTodo) {
         aTodo.userId = this.props.auth.uid;         // so we can map the work to a user
-        this.props.firebase.push('work', aTodo);
+        this.props.firebase.push('work/' + aTodo.userId, aTodo);
     }
 
     render() {
@@ -50,7 +50,8 @@ Dashboard.propTypes = {
 // what properties from the global state we want to pass to the component
 const mapStateToProps = (state) => {
     return {
-        work: state.firebase.data.work
+        work: state.firebase.data.work,
+        profile: state.firebase.profile
     };
 };
 
