@@ -28,3 +28,11 @@ export class Work extends Component {
     }
 
 }
+
+export const Work2 = (props) => {
+    return (
+        <div>
+            <button onClick={() => props.createTodo({text: 'Sample', done: false})}> create todo</button>
+        </div>
+    )
+}
