@@ -20,6 +20,8 @@ class LoginPage extends React.Component {
         this.state = {
             redirect: false
         };
+
+        console.log('props in loginpage: ' + JSON.stringify(this.props));
     }
 
     login() {

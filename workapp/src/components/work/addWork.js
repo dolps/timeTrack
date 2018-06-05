@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import {FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
+import {connect} from "react-redux";
+import PropTypes from 'prop-types'
+import {compose} from "redux";
+import {firebaseConnect, isLoaded, isEmpty} from 'react-redux-firebase'
 
 export class AddWork extends Component {
     constructor(props, context) {
@@ -10,18 +14,20 @@ export class AddWork extends Component {
         this.state = {
             dateWorked: '',
             hoursWorked: 0,
-            typeOfWork: '',
+            typeOfWork: ''
         }
+        console.log('props: ' + JSON.stringify(this.props));
+    }
+
+    submitData() {
+        // this.props.firebase.push('work', this.state);
     }
 
     getValidationState() {
-        const length = this.state.value.length;
-
-        if (length >= 3 && length < 10) return 'success';
-        else if (length < 3) return 'warning';
-        else if (length === 0 || length >= 10) return 'error';
-
-        return null;
+        return 'success'; // warning and error can also be returned
+        /*
+        const length = this.state.value.length; // can check for length
+        */
     }
 
     handleChange($event) {
@@ -73,12 +79,11 @@ export class AddWork extends Component {
                             type="text"
                             name="typeOfWork"
                             placeholder="Enter text"
-                            onChange={this.handleChange}
-                        />
+                            onChange={this.handleChange}/>
                         <FormControl.Feedback/>
                     </FormGroup>
 
-                    <Button type="submit">Submit</Button>
+                    <Button onClick={this.submitData()}>Submit</Button>
                 </form>
             </div>
 
@@ -87,4 +92,15 @@ export class AddWork extends Component {
 
 }
 
-export default (AddWork);
+AddWork.propTypes = {
+    firebase: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    })
+};
+
+export default compose(
+    firebaseConnect(['work']),
+    connect((state) => ({
+        work: state.firebase.data.work
+    }))
+)(AddWork)
