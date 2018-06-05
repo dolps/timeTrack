@@ -15,12 +15,14 @@ export class AddWork extends Component {
             dateWorked: '',
             hoursWorked: 0,
             typeOfWork: ''
-        }
+        };
         console.log('props: ' + JSON.stringify(this.props));
     }
 
     submitData() {
-        // this.props.firebase.push('work', this.state);
+        console.log('submitting data');
+        const sampleTodo = {text: 'Sample', done: false};
+        this.props.createTodo(this.state);
     }
 
     getValidationState() {
@@ -83,7 +85,7 @@ export class AddWork extends Component {
                         <FormControl.Feedback/>
                     </FormGroup>
 
-                    <Button onClick={this.submitData()}>Submit</Button>
+                    <Button onClick={() => this.submitData()}>Submit</Button>
                 </form>
             </div>
 

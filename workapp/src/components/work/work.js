@@ -21,7 +21,6 @@ export class Work extends Component {
         return (
             <div>
                 <button onClick={this.onCreateTodo.bind(this)}> create todo</button>
-                <AddWork/>
                 <div>worklist</div>
             </div>
         )
@@ -30,9 +29,12 @@ export class Work extends Component {
 }
 
 export const Work2 = (props) => {
+    console.log('what');
+    const sampleTodo = {text: 'aSample', done: false};
+
     return (
         <div>
-            <button onClick={() => props.createTodo({text: 'Sample', done: false})}> create todo</button>
+            <button onClick={() => props.createTodo(sampleTodo)}> create todo</button>
         </div>
     )
-}
+};

@@ -7,43 +7,38 @@ import {withRouter} from 'react-router-dom'
 import {UserIsAuthenticated} from "../auth/authService";
 import {Work, Work2} from "./work/work";
 import {firebaseConnect} from "react-redux-firebase";
+import {AddWork} from "./work/addWork";
 
 // https://github.com/mjrussell/redux-auth-wrapper should probably checkout this
 class Dashboard extends Component {
     constructor(props) {
         super(props);
-
-        console.log('in dashboard: ' + JSON.stringify(props));
-    }
-
-    // todo remove this
-    sample(aTodo) {
-        console.log('sampletest');
     }
 
     onCreateTodo(aTodo) {
         console.log('in Dashboard component onCreateTodo: ' + JSON.stringify(aTodo));
-        const pushTodo = () => this.props.firebase.push('todos', aTodo);
+        const pushTodo = () => this.props.firebase.push('work', aTodo);
         pushTodo();
     }
 
     render() {
-        const {todos} = this.props;
-        const todosList = !isLoaded(todos) ?
-            'Loading' : isEmpty(todos) ?
-                'Todo list is empty' : Object.keys(todos).map(
-                    (key, id) => (
-                        <div key={key} id={id}>{todos[key].text}</div>
-                    )
-                );
+        const {todos, work} = this.props;
+        console.log('work: ' + JSON.stringify(work));
+
+        const workList = !isLoaded(work) ? 'Loading' : isEmpty(work) ? 'Worklist is empty' : Object.keys(work)
+            .map((key, id) => (
+                <div key={key} id={id}>{work[key].dateWorked} {work[key].typeOfWork} {work[key].hoursWorked}</div>
+            ));
 
         return (
             <div>
-                <Work pushSample={this.sample.bind(this)} createTodo={this.onCreateTodo.bind(this)}/>
-                <Work2 createTodo={this.onCreateTodo.bind(this)}/>
+                <AddWork createTodo={this.onCreateTodo.bind(this)}/> {/*form for adding work*/}
+                <hr/>
+
+                workList:
                 <ul>
                     <li>
-                        {todosList}
+                        {workList}
                     </li>
                 </ul>
             </div>
@@ -54,15 +49,14 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
     firebase: PropTypes.shape({
-        login: PropTypes.func.isRequired,
-    }),
-    auth: PropTypes.object
+        push: PropTypes.func.isRequired,
+    })
 };
 
 // what properties from the global state we want to pass to the component
 const mapStateToProps = (state) => {
     return {
-        todos: state.firebase.data.todos
+        work: state.firebase.data.work
     };
 };
 
@@ -71,9 +65,7 @@ const mapDispatchToProps = (dispatch) => {
     return {};
 };
 
-// connect connects react with redux
-// export default withFirebase(Todos);
 export default compose(UserIsAuthenticated,
-    firebaseConnect(['todos']), // maps to firebase array
+    firebaseConnect(['work']), // maps to firebase array
     connect(mapStateToProps, mapDispatchToProps)
 )(Dashboard)
