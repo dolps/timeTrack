@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 import {compose} from 'redux'
 import {connect} from 'react-redux'
 import {isLoaded, isEmpty} from 'react-redux-firebase'
-import {withRouter} from 'react-router-dom'
 import {UserIsAuthenticated} from "../auth/authService";
-import {Work, Work2} from "./work/work";
 import {firebaseConnect} from "react-redux-firebase";
 import {AddWork} from "./work/addWork";
 
@@ -16,18 +14,15 @@ class Dashboard extends Component {
     }
 
     onCreateTodo(aTodo) {
-        console.log('in Dashboard component onCreateTodo: ' + JSON.stringify(aTodo));
-        const pushTodo = () => this.props.firebase.push('work', aTodo);
-        pushTodo();
+        aTodo.userId = this.props.auth.uid;         // so we can map the work to a user
+        this.props.firebase.push('work', aTodo);
     }
 
     render() {
-        const {todos, work} = this.props;
-        console.log('work: ' + JSON.stringify(work));
-
+        const {work} = this.props;
         const workList = !isLoaded(work) ? 'Loading' : isEmpty(work) ? 'Worklist is empty' : Object.keys(work)
             .map((key, id) => (
-                <div key={key} id={id}>{work[key].dateWorked} {work[key].typeOfWork} {work[key].hoursWorked}</div>
+                <li key={key} id={id}>{work[key].dateWorked} {work[key].typeOfWork} {work[key].hoursWorked}</li>
             ));
 
         return (
@@ -37,9 +32,7 @@ class Dashboard extends Component {
 
                 workList:
                 <ul>
-                    <li>
-                        {workList}
-                    </li>
+                    {workList}
                 </ul>
             </div>
 
@@ -50,7 +43,8 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
     firebase: PropTypes.shape({
         push: PropTypes.func.isRequired,
-    })
+    }),
+    auth: PropTypes.object
 };
 
 // what properties from the global state we want to pass to the component
@@ -67,5 +61,6 @@ const mapDispatchToProps = (dispatch) => {
 
 export default compose(UserIsAuthenticated,
     firebaseConnect(['work']), // maps to firebase array
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, mapDispatchToProps),
+    connect(({firebase: {auth}}) => ({auth}))
 )(Dashboard)

@@ -103,6 +103,6 @@ AddWork.propTypes = {
 export default compose(
     firebaseConnect(['work']),
     connect((state) => ({
-        work: state.firebase.data.work
-    }))
+        work: state.firebase.data.work,//    connect(({firebase: {auth}}) => ({auth}))
+    })),
 )(AddWork)
